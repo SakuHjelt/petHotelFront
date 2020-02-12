@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Data from './Data';
+import Data from '../components/Data';
 import { fetchFrontPageData } from '../service/apiclient';
 
 export default class List extends Component {

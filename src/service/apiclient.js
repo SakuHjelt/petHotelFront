@@ -1,6 +1,6 @@
 const url = '/api/v1/locations';
 const firstPageUrl = '?limit=5,select=title,costAmount,costType,address,createdAt&sort';
-const dataCountUrl = '?select=count';
+const searchUrl = '?select=title,costAmount,costType,address,animalTypes,createdAt&sort';
 
 export const fetchAllData = () => {
     return fetch(url)
@@ -12,7 +12,8 @@ export const fetchFrontPageData = () => {
         .then(response => response.json());
 }
 
-export const fetchCount = () => {
-    return fetch(`${url}/${dataCountUrl}`)
-        .then(response => response.json());
+export const fetchSearchData = (formInputData) => {
+    return fetch(`${url}${searchUrl}${formInputData}`)
+        .then(response => response.json())
+        .then(console.log(`${url}/${searchUrl}${formInputData}`));
 }
