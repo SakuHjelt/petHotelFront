@@ -2,20 +2,38 @@ import React, { Component } from 'react'
 import { fetchSearchData } from '../service/apiclient';
 
 export default class search extends Component {
-    state = { location: String, animalType: String, price: Number }
+    state = { location: null, animalType: null, price: null }
     handleLocationChange = (e) => {
-        this.setState({ location: '&address=' + e.target.value })
+        this.setState({ location: '&address=' + e.target.value });
     }
     handleAnimalTypeChange = (e) => {
-        this.setState({ animalType: '&animalTypes[in]=' + e.target.value })
+        this.setState({ animalType: '&animalTypes[in]=' + e.target.value });
     }
     handlePriceChange = (e) => {
-        this.setState({ price: '&costAmount=' + e.target.value })
+        document.getElementById('priceText').innerText = e.target.value;
+        this.setState({ price: '&costAmount[lte]=' + e.target.value });
     }
     fetchSearchList = (e) => {
         e.preventDefault();
-        fetchSearchData(this.state.location + this.state.animalType + this.state.price).then(allData => {
-            console.log(this.state.location, this.state.animalType, this.state.price)
+        let locationUrl = '';
+        let animalTypeUrl = '';
+        let priceUrl = '';
+        if (this.state.location !== null && this.state.location !== '&address=') {
+            locationUrl += this.state.location;
+        } else {
+            locationUrl = ''
+        }
+        if (this.state.animalType !== null && this.state.animalType !== '&animalTypes[in]=') {
+            animalTypeUrl += this.state.animalType;
+        } else {
+            animalTypeUrl = ''
+        }
+        if (this.state.price !== null && this.state.price !== '&costAmount[lte]=') {
+            priceUrl += this.state.price;
+        } else {
+            priceUrl = ''
+        }
+        fetchSearchData(locationUrl + animalTypeUrl + priceUrl).then(allData => {
             console.log(allData)
         })
     }
@@ -24,17 +42,29 @@ export default class search extends Component {
             <div className="formBackground">
                 <form >
                     <fieldset className="form">
-                        <legend>Search for Pet Hotel</legend>
-                        <label htmlFor='form_location'>Location</label><br />
-                        <input type='text' placeholder='Location' id='form_location' onChange={this.handleLocationChange}/><br />
-                        <label htmlFor='form_animal_type'>Animal Type</label><br />
-                        <input type='text' placeholder='Animal Type' id='form_animal_type' onChange={this.handleAnimalTypeChange}/><br />
-                        <label htmlFor='form_price'>Maximun price cheap mothafukka</label><br />
-                        <input type='number' autoComplete='off' id='form_price' onChange={this.handlePriceChange} /><br />
+                        <label><h5>Search for Pet Hotel</h5></label>
+                        <label>Location</label><br />
+                        <select name="location" onChange={this.handleLocationChange}>
+                            <option select="true" value={null}></option>
+                            <option value="233 Bay State Rd Boston MA 02215">233 Bay State Rd Boston MA 02215</option>
+                            <option value="Keilaranta">666 Keilaranta</option>
+                        </select>
+                        <br /><br />
+                        <label>Animal Types</label><br />
+                        <select name="animalTypes" onChange={this.handleAnimalTypeChange}>
+                            <option select="true" value={null}></option>
+                            <option value="Dogs">Dogs</option>
+                            <option value="Cats">Cats</option>
+                        </select>
+                        <br /><br />
+                        <label htmlFor='form_price'>Maximum price</label><br />
+                        <input type="range" min="0" max="100" onChange={this.handlePriceChange}></input><br /><br />
+                        <p id="priceText">this bitch empty</p>
                         <button onClick={this.fetchSearchList}>Search</button>
                     </fieldset>
                 </form>
             </div>
+
         )
     }
 }

@@ -15,5 +15,4 @@ export const fetchFrontPageData = () => {
 export const fetchSearchData = (formInputData) => {
     return fetch(`${url}${searchUrl}${formInputData}`)
         .then(response => response.json())
-        .then(console.log(`${url}/${searchUrl}${formInputData}`));
 }

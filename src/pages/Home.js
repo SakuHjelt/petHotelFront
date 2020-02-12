@@ -10,7 +10,6 @@ export default class List extends Component {
     componentDidMount() {
         this.fetchDataList();
     }
-
     fetchDataList = () => {
         fetchFrontPageData().then(allData => {
             this.setState({ allData });
