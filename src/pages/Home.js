@@ -22,7 +22,6 @@ export default class List extends Component {
         }
         console.log(this.state.allData)
         const dataItems = this.state.allData.data
-            .sort(function (_id_a, _id_b) { return _id_a.id - _id_b.id })
             .map((data) => {
                 return <Data {...this.props} data={data} key={data._id} />
             })
@@ -32,7 +31,7 @@ export default class List extends Component {
                 <div className="advertContainer">
                     {dataItems}
                 </div>
-                <p>Currently {this.state.allData.count} adverts on our site.</p>
+                <p>Currently {this.state.allData.total} adverts on our site.</p>
             </div>
         )
     }

@@ -12,7 +12,7 @@ export default class Data extends Component {
                 </p>
                 <p>
                     <b>Cost: </b>
-                    {costAmount}€ per {costType[0]}
+                    {costAmount}€ per {costType}
                 </p>
             </div>
         )
